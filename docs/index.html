@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Documentação - KoalCode</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../style.css" />
+    </head>
+    <body>
+        <button id="menu-toggle">☰</button>
+
+        <aside id="sidebar">
+            <h3>Navegação</h3>
+            <ul>
+                <li><a href="#sobre">Sobre a Linguagem</a></li>
+                <li><a href="#compilar">Compilar e Executar</a></li>
+                <li><a href="#tipos-de-dados">Tipos de Dados</a></li>
+                <li><a href="#operadores">Operadores</a></li>
+                <li>
+                    <a href="#estruturas-de-controle">Estruturas de Controle</a>
+                </li>
+                <li><a href="#funcoes-builtin">Funções Built-in</a></li>
+                <li><a href="#exemplos">Exemplos</a></li>
+                <li><a href="#api-grafica">API Gráfica</a></li>
+                <li><a href="#eventos">Eventos</a></li>
+                <li><a href="#efeitos">Efeitos</a></li>
+                <li><a href="#shaders">Shaders</a></li>
+                <li><a href="#limitacoes">Limitações Atuais</a></li>
+                <li>
+                    <a href="#compilacao-problemas">Compilação e Problemas</a>
+                </li>
+            </ul>
+        </aside>
+
+        <header>
+            <h1>KoalCode - Documentação</h1>
+            <p>Referência oficial da linguagem</p>
+            <nav>
+                <a href="../index.html">Início</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="sobre">
+                <h2>📖 Sobre a Linguagem</h2>
+                <p>
+                    <strong>KoalCode</strong> é uma linguagem de programação
+                    <em>ULTRA simples</em>, interpretada em multithreading, com
+                    sintaxe inspirada em Lua. Suporta operações aritméticas,
+                    lógicas, bitwise, estruturas de controle e funções de I/O
+                    básicas.
+                </p>
+            </section>
+
+            <section id="compilar">
+                <h2>⚙️ Como Compilar e Executar</h2>
+                <pre><code># Compilar (flags obrigatórias)
+gcc -o koalcode main.c -lSDL2 -lSDL2_image -lGL -lm -lpthread
+
+# Executar um script
+./koalcode script.kc
+</code></pre>
+            </section>
+
+            <section id="tipos-de-dados">
+                <h2>📊 Tipos de Dados</h2>
+                <ul>
+                    <li>
+                        <b>Números(apenas doubles):</b> inteiros e decimais
+                        (<code>42</code>, <code>3.14</code>)
+                    </li>
+                    <li><b>Strings:</b> <code>"texto"</code></li>
+                    <li><b>Variáveis:</b> criadas na primeira atribuição</li>
+                </ul>
+            </section>
+
+            <section id="operadores">
+                <h2>➕ Operadores</h2>
+                <pre><code>-- Aritméticos
+                    a = 10 + 5     -- Adição
+                    b = 10 - 5     -- Subtração
+                    c = 10 * 5     -- Multiplicação
+                    d = 10 / 5     -- Divisão
+                    e = 10 % 3     -- Módulo
+                    f = 2 ** 3     -- Potenciação (2³ = 8)
+-- Relacionais
+a = 5 < 10     -- Menor que
+b = 5 <= 10    -- Menor ou igual
+c = 5 > 10     -- Maior que
+d = 5 >= 10    -- Maior ou igual
+e = 5 == 10    -- Igual
+f = 5 != 10    -- Diferente (ou ~=)
+
+-- Lógicos
+a = 1 && 0     -- E lógico
+b = 1 || 0     -- OU lógico
+c = !1         -- NÃO lógico
+
+-- Bitwise
+a = 5 & 3      -- E bitwise
+b = 5 | 3      -- OU bitwise
+c = 5 ^ 3      -- XOR bitwise
+d = 5 << 2     -- Deslocamento à esquerda
+e = 20 >> 2    -- Deslocamento à direita
+f = ~5         -- Complemento bitwise
+
+-- Atribuicao
+--simples
+x = 10
+
+-- Atribuições compostas
+x += 5    -- x = x + 5
+x -= 3    -- x = x - 3
+x *= 2    -- x = x * 2
+x /= 4    -- x = x / 4
+x %= 3    -- x = x % 3
+x &= 7    -- x = x & 7
+x |= 1    -- x = x | 1
+x ^= 2    -- x = x ^ 2
+x <<= 1   -- x = x << 1
+x >>= 2   -- x = x >> 2
+x **= 2   -- x = x ** 2
+
+-- Unários
+a = -x     -- Negação
+b = +x     -- Positivo (sem efeito)
+c = !x     -- NÃO lógico
+d = ~x     -- Complemento bitwise
+</code></pre>
+            </section>
+
+            <section id="estruturas-de-controle">
+                <h2>🔀 Estruturas de Controle</h2>
+                <pre><code>-- If
+if x > 0 {
+  print("positivo")
+} else {
+  print("negativo")
+}
+
+-- if else if
+if nota >= 90 {
+    print("seila: A")
+} else if nota >= 80 {
+    print("seila: B")
+} else if nota >= 70 {
+    print("seila: C")
+} else {
+    print("seila: D")
+}
+
+-- if sem chaves (uma instrução)
+if x > 0
+    print("Positivo")
+
+    -- if aninhados
+    if temperatura > 20 {
+        if chovendo == 0 {
+            print("Bom dia para sair!")
+        } else {
+            print("Leve guarda-chuva so cuidado para nao furar com seu chifre")
+        }
+    }
+
+    -- if com operadores lógicos
+    if idade >= 18 && tem_carteira == 1 {
+        print("Pode dirigir!")
+    }
+
+    -- While
+    while x < 10 {
+      x += 1
+      print(x)
+    }
+
+    -- Com parênteses
+    while (x < 10) {
+        print("x é", x)
+        x += 1
+    }
+
+    -- Corpo sem chaves (uma única instrução)
+    while x < 5
+        x += 1
+
+        -- Bloco
+        {
+            a = 10
+            b = 20
+            print("Soma:", a + b)
+        }
+
+</code></pre>
+            </section>
+
+            <section id="funcoes-builtin">
+                <h2>🔧 Funções Built-in</h2>
+                <ul class="docs-list">
+                    <li><code>print(...)</code> → imprime no console</li>
+                    <li>
+                        <code
+                            >mistrura de string e numeros: nome = "koal" tipo =
+                            "interpretada" print("nome:", nome, "tipo:",
+                            tipo)</code
+                        >
+                        → deve sair no console como : nome: koal tipo:
+                        interpretada
+                    </li>
+                    <li><code>input.io()</code> → lê texto</li>
+                    <code
+                        >print("Digite seu nome:") input.io()
+                        print("Obrigado!")</code
+                    >
+                    <li><code>inputn.io()</code> → lê número</li>
+                    <code
+                        >print("Digite um número:") numero = inputn.io()
+                        print("Você digitou:", numero) print("O dobro é:",
+                        numero * 2) print("O quadrado é:", numero ** 2)</code
+                    >
+                    <li>
+                        <code>writef("arquivo.txt","texto")</code> → escreve em
+                        arquivo
+                    </li>
+                    <li>
+                        <code>readf("arquivo.txt")</code> → verifica se arquivo
+                        existe
+                    </li>
+                    <li>
+                        <code>clear()</code> → limpa tela do terminal(compativel
+                        com Linux/Unix(clear) e Windows(cls)
+                    </li>
+                </ul>
+            </section>
+
+            <section id="exemplos">
+                <h2>📂 Exemplos</h2>
+                <h3>Calculadora</h3>
+                <pre><code>print("Digite dois números:")
+a = inputn.io()
+b = inputn.io()
+print("Soma:", a + b)
+print("Potência:", a ** b)
+</code></pre>
+
+                <h3>Menu interativo</h3>
+                <pre><code>opcao = 1
+while opcao != 0 {
+  clear()
+  print("=== MENU ===")
+  print("1 - Teste")
+  print("0 - Sair")
+  opcao = inputn.io()
+}
+</code></pre>
+                <h3>Leitura e Criacao de arquivo</h3>
+                <pre><code>writef(arquivo, conteudo)
+Escreve texto em um arquivo. Cria um arquivo se não existir, sobrescreve se existir.
+
+Parâmetros:
+- `arquivo` (string): Nome do arquivo
+- `conteudo` (string): Texto a ser escrito
+-- Criar arquivo simples
+resultado = writef("dados.txt", "Olá mundo!")
+print("Resultado:", resultado)
+
+-- Criar arquivo de configuração por exemplo
+config_ok = writef("config.txt", "debug=true\nversao=1.0\nautor=KoalCode")
+
+-- Arquivo com dados de usuário
+print("Digite um valor:")
+valor = inputn.io()
+arquivo_criado = writef("usuario_data.txt", "Valor inserido pelo usuario")
+
+-- Verificar se arquivo existe
+existe = readf("dados.txt")
+print("Arquivo existe:", existe)
+
+-- Sistema de configuração
+config_algo = readf("config.txt")
+print("Status configuração:", config_algo)
+
+-- Exemplo prático
+dados_existem = readf("dados.txt")
+-- Se dados_existirem entao == 1, o arquivo existe
+-- Se dados nao existirem == 0, arquivo não existe
+</code></pre>
+            </section>
+
+            <section id="api-grafica">
+                <h2>🎨 API Gráfica</h2>
+                <p>
+                    A <strong>KoalCode</strong> possui uma API gráfica baseada
+                    em <em>SDL2</em> + <em>OpenGL</em>, permitindo criar
+                    janelas, desenhar formas, aplicar transformações e carregar
+                    texturas e modelos 3D.
+                </p>
+
+                <ul class="docs-list">
+                    <li>
+                        <code>graphics.init()</code> → Inicializa a janela
+                        gráfica.<br />
+                        <pre><code>graphics.init()</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.quit()</code> → Fecha a janela.<br />
+                        <pre><code>graphics.quit()</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.clear()</code> → Limpa a tela.<br />
+                        <pre><code>graphics.clear()</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.swap()</code> → Atualiza a tela (double
+                        buffer).<br />
+                        <pre><code>graphics.swap()</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.color(r,g,b)</code> → Define a cor atual
+                        (0–1).<br />
+                        <pre><code>graphics.color(0,1,0)</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.point(x,y,z)</code> → Desenha um ponto
+                        3D.<br />
+                        <pre><code>graphics.point(0,0,-5)</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.line(x1,y1,z1, x2,y2,z2)</code> → Desenha
+                        uma linha.<br />
+                        <pre><code>graphics.line(0,0,-5, 1,1,-5)</code></pre>
+                    </li>
+                    <li>
+                        <code
+                            >graphics.triangle(x1,y1,z1, x2,y2,z2,
+                            x3,y3,z3)</code
+                        >
+                        → Desenha triângulo.<br />
+                        <pre><code>graphics.triangle(0,0,-5, 1,0,-5, 0,1,-5)</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.translate(x,y,z)</code> → Move cena.<br />
+                        <pre><code>graphics.translate(0,0,-3)</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.rotate(angulo,x,y,z)</code> → Rotaciona
+                        objetos.<br />
+                        <pre><code>graphics.rotate(45,0,1,0)</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.load_texture("img.png")</code> → Carrega
+                        textura (retorna ID).<br />
+                        <pre><code>tex = graphics.load_texture("sprite.png")</code></pre>
+                    </li>
+                    <li>
+                        <code>graphics.draw_model(id)</code> → Desenha modelo
+                        3D.<br />
+                        <pre><code>model = graphics.load_model("cubo.obj")
+            graphics.draw_model(model)</code></pre>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="eventos">
+                <h2>⌨️ Eventos</h2>
+                <p>
+                    Os eventos são processados com
+                    <code>graphics.events()</code>. O estado de cada tecla ou do
+                    mouse pode ser consultado diretamente.
+                </p>
+                <ul class="docs-list">
+                    <li>
+                        <code>graphics.events()</code> → Atualiza eventos do
+                        frame.
+                    </li>
+                    <li>
+                        <code>input.key.w()</code> → Retorna 1 se tecla
+                        <b>W</b> está pressionada.
+                    </li>
+                    <li>
+                        <code>input.key.up()</code>,
+                        <code>input.key.down()</code>, etc → Setas do teclado.
+                    </li>
+                    <li>
+                        <code>input.mouse.x()</code> /
+                        <code>input.mouse.y()</code> → Coordenadas do mouse.
+                    </li>
+                    <li>
+                        <code>input.mouse.left()</code> /
+                        <code>input.mouse.right()</code> → Botões do mouse.
+                    </li>
+                </ul>
+                <pre><code>while true {
+              graphics.events()
+              if input.key.w() {
+                print("Tecla W pressionada")
+              }
+              print("Mouse:", input.mouse.x(), input.mouse.y())
+            }</code></pre>
+            </section>
+
+            <section id="efeitos">
+                <h2>✨ Efeitos</h2>
+                <p>
+                    Algumas funções gráficas permitem manipular efeitos visuais
+                    básicos.
+                </p>
+                <ul class="docs-list">
+                    <li>
+                        <code>graphics.background(r,g,b)</code> → Define cor de
+                        fundo.
+                    </li>
+                    <li>
+                        <code>graphics.alpha(valor)</code> → Define
+                        transparência global (0–1).
+                    </li>
+                    <li>
+                        <code>graphics.blend(mode)</code> → Define modo de
+                        mesclagem (ex: "add", "mul").
+                    </li>
+                </ul>
+                <pre><code>graphics.background(0,0,0)
+            graphics.alpha(0.5)
+            graphics.color(1,0,0)
+            graphics.triangle(0,0,-5, 1,0,-5, 0,1,-5)</code></pre>
+            </section>
+
+            <section id="shaders">
+                <h2>🖌️ Shaders</h2>
+                <p>
+                    A linguagem possui suporte experimental a
+                    <em>GLSL shaders</em> para efeitos avançados.
+                </p>
+                <ul class="docs-list">
+                    <li>
+                        <code>shader.load("vert.glsl", "frag.glsl")</code> →
+                        Carrega um shader (retorna ID).
+                    </li>
+                    <li><code>shader.use(id)</code> → Ativa shader.</li>
+                    <li>
+                        <code>shader.uniform(id, "nome", valor)</code> → Passa
+                        variável para shader.
+                    </li>
+                </ul>
+                <pre><code>-- Carregar e aplicar shader
+            sh = shader.load("base.vert", "luz.frag")
+            shader.use(sh)
+            shader.uniform(sh, "tempo", 1.0)</code></pre>
+            </section>
+
+            <section id="limitacoes">
+                <h2>⚠️ Limitações Atuais</h2>
+                <ul>
+                    <li>Sem funções definidas pelo usuário</li>
+                    <li>Sem arrays/objetos</li>
+                    <li>Strings limitadas (apenas I/O)</li>
+                    <li>Classes experimentais (não funcionais)</li>
+                    <li>Somente <code>while</code> loops</li>
+                </ul>
+            </section>
+
+            <section id="compilacao-problemas">
+                <h2>🛠️ Compilação e Problemas Comuns</h2>
+                <ul>
+                    <li>Use <code>-lm -lpthread</code> no GCC</li>
+                    <li>Erro de sintaxe → confira chaves e parênteses</li>
+                    <li>Arquivo não encontrado → verifique o nome</li>
+                    <li>
+                        SDL2 nao encontrado → verifique se a biblioteca esta
+                        instalada
+                    </li>
+                    <li>
+                        janela nao abre → verificar se o display esta
+                        diponivel(nao funciona em SSH sem X11)
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>>_KoalCode Docs · v0.9 Experimental</p>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const menuToggle = document.getElementById("menu-toggle");
+                const sidebar = document.getElementById("sidebar");
+                const body = document.body;
+
+                menuToggle.addEventListener("click", () => {
+                    sidebar.classList.toggle("open");
+                    body.classList.toggle("sidebar-open");
+                });
+
+                // Close sidebar when a link is clicked
+                const sidebarLinks = document.querySelectorAll("#sidebar a");
+                sidebarLinks.forEach((link) => {
+                    link.addEventListener("click", () => {
+                        if (sidebar.classList.contains("open")) {
+                            sidebar.classList.remove("open");
+                            body.classList.remove("sidebar-open");
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

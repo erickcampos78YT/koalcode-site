@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <title>KoalCode Language</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>KoalCode</h1>
+            <p>Uma linguagem de programação leve com gráficos integrados 🚀</p>
+            <nav>
+                <a href="docs/">Documentação</a>
+                <a href="https://github.com/seuusuario/koalcode" target="_blank"
+                    >GitHub</a
+                >
+            </nav>
+        </header>
+
+        <main>
+            <section>
+                <h2>✨ O que é?</h2>
+                <p>
+                    <strong>KoalCode</strong> é uma linguagem experimental
+                    inspirada em Lua, criada para ser simples mas poderosa. Ela
+                    vem com suporte nativo a
+                    <strong>gráficos 2D/3D via SDL2 + OpenGL</strong>, além de
+                    entrada de mouse e teclado.
+                    <strong>o interpretador roda em multhread na cpu </strong>
+                    Ou seja quanto mais nucleos e threads seu cpu tiver mais
+                    rapido a execusao
+                </p>
+            </section>
+
+            <section>
+                <h2>🚀 Recursos</h2>
+                <ul>
+                    <li>Sintaxe simples e expressiva</li>
+                    <li>Máquina virtual própria baseada em pilha</li>
+                    <li>
+                        Funções embutidas como <code>print</code>,
+                        <code>input.io</code>, <code>writef</code>
+                    </li>
+                    <li>
+                        API gráfica com <code>graphics.init</code>,
+                        <code>graphics.line</code>, <code>graphics.model</code>
+                    </li>
+                    <li>Eventos de teclado e mouse embutidos</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>📝 Exemplo de código</h2>
+                <pre><code>-- Exemplo simples em KoalCode
+graphics.init()
+graphics.color(0, 1, 0)
+
+while true {
+  graphics.clear()
+  graphics.line(0, 0, -5, 1, 1, -5)
+  graphics.swap()
+  graphics.events()
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>🔧 Instalação</h2>
+                <ol>
+                    <li>
+                        Clone o repositório:
+                        <pre><code>git clone https://github.com/erickcampos78YT/Koalcode</code></pre>
+                    </li>
+                    <li>
+                        Compile com GCC:
+                        <pre><code>gcc -o koalcode main.c -lSDL2 -lSDL2_image -lGL -lm -lpthread</code></pre>
+                    </li>
+                    <li>
+                        Execute um script:
+                        <pre><code>./koalcode exemplo.kc</code></pre>
+                    </li>
+                </ol>
+            </section>
+        </main>
+
+        <footer>
+            <p>Feito com ❤️ por Erick Campos · 2025</p>
+        </footer>
+    </body>
+</html>
