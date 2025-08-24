@@ -9,6 +9,7 @@ body {
     background: linear-gradient(160deg, #0d1117 0%, #12151b 100%);
     color: #c9d1d9;
     transition: all 0.3s ease;
+    font-size: 16px;
 }
 
 /* ---------------- Header ---------------- */
@@ -24,7 +25,7 @@ header {
 header h1 {
     margin: 0;
     color: #58a6ff;
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 1.2;
     letter-spacing: 1px;
 }
@@ -32,7 +33,7 @@ header h1 {
 header p {
     color: #8b949e;
     margin-top: 6px;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 header nav {
@@ -41,9 +42,10 @@ header nav {
 
 header nav a {
     color: #58a6ff;
-    margin: 0 10px;
+    margin: 0 8px;
     text-decoration: none;
     font-weight: 500;
+    font-size: 1rem; 
     position: relative;
     transition: color 0.2s;
 }
@@ -72,7 +74,7 @@ footer {
     padding: 15px 10px;
     text-align: center;
     color: #8b949e;
-    font-size: 0.85rem;
+    font-size: 0.9rem; /* mobile-friendly */
     border-top: 1px solid #30363d;
     backdrop-filter: blur(6px);
 }
@@ -87,13 +89,11 @@ footer {
     background: rgba(22, 27, 34, 0.97);
     border-right: 1px solid #30363d;
     transform: translateX(0);
-    transition:
-        left 0.3s ease,
-        box-shadow 0.3s ease;
+    transition: left 0.3s ease, box-shadow 0.3s ease;
     z-index: 1000;
     overflow-y: auto;
     padding-top: 60px;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.7);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.7);
     backdrop-filter: blur(6px);
     border-radius: 0 12px 12px 0;
 }
@@ -118,12 +118,13 @@ footer {
 
 #sidebar ul li a {
     display: block;
-    padding: 10px 15px;
+    padding: 12px 15px; 
     color: #c9d1d9;
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
     border-radius: 6px 0 0 6px;
+    font-size: 1rem; 
 }
 
 #sidebar ul li a:hover {
@@ -153,12 +154,12 @@ body.sidebar-open main {
     color: #c9d1d9;
     border: 1px solid #8b949e;
     border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 1.1rem;
+    padding: 10px 16px;
+    font-size: 1.2rem; 
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(6px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 #menu-toggle:hover {
@@ -169,7 +170,7 @@ body.sidebar-open #menu-toggle {
     left: 230px;
 }
 
-/* ---------------- Sections and Typography ---------------- */
+/* ----------------Typography ---------------- */
 section {
     margin-bottom: 35px;
 }
@@ -177,8 +178,8 @@ section {
 h2 {
     color: #58a6ff;
     border-bottom: 1px solid rgba(48, 54, 61, 0.5);
-    padding-bottom: 4px;
-    margin-bottom: 12px;
+    padding-bottom: 6px;
+    margin-bottom: 15px;
     font-size: 1.5rem;
     letter-spacing: 0.5px;
 }
@@ -188,8 +189,8 @@ pre {
     padding: 15px;
     border-radius: 10px;
     overflow-x: auto;
-    font-size: 0.9rem;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+    font-size: 1rem; 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
     transition: all 0.3s ease;
 }
 
@@ -199,8 +200,8 @@ ul.docs-list {
 }
 
 ul.docs-list li {
-    margin: 8px 0;
-    font-size: 0.95rem;
+    margin: 10px 0;
+    font-size: 1rem;
 }
 
 ul.docs-list code {
@@ -208,34 +209,24 @@ ul.docs-list code {
     padding: 3px 6px;
     border-radius: 6px;
     color: #79c0ff;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 /* ---------------- Responsive Adjustments ---------------- */
 @media (min-width: 600px) {
-    header h1 {
-        font-size: 2.2rem;
-    }
-    h2 {
-        font-size: 1.6rem;
-    }
+    header h1 { font-size: 2.2rem; }
+    header p { font-size: 1rem; }
+    h2 { font-size: 1.6rem; }
+    #sidebar ul li a { font-size: 1.05rem; }
+    ul.docs-list li { font-size: 1.05rem; }
+    pre { font-size: 1rem; }
 }
 
 @media (min-width: 768px) {
-    #sidebar {
-        width: 250px;
-        left: -250px;
-        border-radius: 0 14px 14px 0;
-    }
-    body.sidebar-open main {
-        margin-left: 270px;
-    }
-    body.sidebar-open #menu-toggle {
-        left: 265px;
-    }
-    main {
-        margin: 40px auto;
-        max-width: 900px;
-        padding: 0 20px;
-    }
+    #sidebar { width: 250px; left: -250px; border-radius: 0 14px 14px 0; }
+    body.sidebar-open main { margin-left: 270px; }
+    body.sidebar-open #menu-toggle { left: 265px; }
+    main { margin: 40px auto; max-width: 900px; padding: 0 20px; }
+    header h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
 }
