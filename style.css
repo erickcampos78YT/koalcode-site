@@ -1,3 +1,4 @@
+/* Reset básico e comportamento geral */
 html {
     scroll-behavior: smooth;
 }
@@ -5,35 +6,30 @@ html {
 body {
     margin: 0;
     font-family: "Fira Code", monospace;
-    background: linear-gradient(160deg, #0d1117 0%, #12151b 100%);
+    background: #0d1117;
     color: #c9d1d9;
-    transition: all 0.3s ease;
-    font-size: 16px;
+    transition: margin-left 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
-header {
-    background: rgba(22, 27, 34, 0.95);
-    padding: 25px 40px;
+/* Header e Footer */
+header, footer {
+    background: #161b22;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid #30363d;
-    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    border-radius: 0 0 10px 10px;
 }
 
 header h1 {
     margin: 0;
     color: #58a6ff;
     font-size: 2.5rem;
-    line-height: 1.2;
-    letter-spacing: 1px;
-    text-shadow: 0 0 6px rgba(88, 166, 255, 0.4);
+    text-shadow: 0 2px 6px rgba(88,166,255,0.5);
 }
 
 header p {
     color: #8b949e;
-    margin-top: 8px;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 header nav {
@@ -45,153 +41,129 @@ header nav a {
     margin: 0 12px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1.1rem;
-    position: relative;
-    transition: color 0.2s;
-}
-
-header nav a::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 2px;
-    background: #58a6ff;
-    transition: width 0.3s;
-    margin-top: 4px;
-}
-
-header nav a:hover::after {
-    width: 100%;
+    transition: all 0.3s ease;
 }
 
 header nav a:hover {
+    text-decoration: underline;
     color: #79c0ff;
 }
 
 footer {
-    background: rgba(22, 27, 34, 0.95);
-    padding: 20px 40px;
-    text-align: center;
     color: #8b949e;
-    font-size: 0.95rem;
-    border-top: 1px solid #30363d;
-    backdrop-filter: blur(6px);
+    font-size: 0.9rem;
 }
 
+/* Container geral */
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Área principal */
+main {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Sidebar */
 #sidebar {
     position: fixed;
     top: -1cm;
-    left: -200px;
-    width: 200px;
-    height: calc(100% + 1cm);
-    background: rgba(22, 27, 34, 0.97);
+    left: 0;
+    width: 200px; /* menor para mobile-friendly */
+    height: 100%;
+    background: #161b22;
     border-right: 1px solid #30363d;
-    transition: left 0.3s ease, box-shadow 0.3s ease;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, width 0.3s ease;
     z-index: 1000;
     overflow-y: auto;
     padding-top: 60px;
-    box-shadow: 2px 0 12px rgba(0,0,0,0.7);
-    backdrop-filter: blur(6px);
-    border-radius: 0 12px 12px 0;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+    border-radius: 0 8px 8px 0;
 }
 
 #sidebar.open {
-    left: 0;
+    transform: translateX(0);
 }
 
 #sidebar h3 {
     color: #58a6ff;
     padding: 0 15px;
     margin-top: 0;
-    font-size: 1.3rem;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 4px rgba(88, 166, 255, 0.4);
+    font-size: 1.2rem;
 }
 
 #sidebar ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
 }
 
 #sidebar ul li a {
     display: block;
-    padding: 14px 15px;
+    padding: 10px 15px;
     color: #c9d1d9;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border-left: 3px solid transparent;
-    border-radius: 6px 0 0 6px;
-    font-size: 1.05rem;
+    border-radius: 4px;
 }
 
 #sidebar ul li a:hover {
-    background: rgba(48, 54, 61, 0.7);
+    background: #30363d;
     border-left: 3px solid #58a6ff;
-    box-shadow: 0 0 12px rgba(88, 166, 255, 0.3);
-    color: #79c0ff;
 }
 
-main {
-    flex-grow: 1;
-    margin: 40px auto;
-    max-width: 900px;
-    padding: 0 20px;
-    transition: margin-left 0.3s ease;
-}
-
+/* Ajuste do main quando sidebar aberta */
 body.sidebar-open main {
     margin-left: 220px;
 }
 
+/* Botão do menu */
 #menu-toggle {
     position: fixed;
     top: 15px;
     left: 15px;
     z-index: 1001;
-    background: rgba(48, 54, 61, 0.95);
+    background: #30363d;
     color: #c9d1d9;
     border: 1px solid #8b949e;
-    border-radius: 8px;
-    padding: 12px 18px;
+    border-radius: 6px;
+    padding: 8px 14px;
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-
-#menu-toggle:hover {
-    background: rgba(48, 54, 61, 1);
-    box-shadow: 0 0 14px rgba(88, 166, 255, 0.5);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
 body.sidebar-open #menu-toggle {
     left: 215px;
 }
 
+/* Conteúdo geral */
 section {
     margin-bottom: 50px;
 }
 
 h2 {
     color: #58a6ff;
-    border-bottom: 1px solid rgba(48, 54, 61, 0.5);
-    padding-bottom: 6px;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 4px rgba(88, 166, 255, 0.3);
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 5px;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(88,166,255,0.4);
 }
 
 pre {
-    background: rgba(22, 27, 34, 0.95);
-    padding: 18px;
-    border-radius: 12px;
+    background: #161b22;
+    padding: 15px;
+    border-radius: 10px;
     overflow-x: auto;
-    font-size: 1rem;
-    box-shadow: inset 0 0 14px rgba(0,0,0,0.4);
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 
 ul.docs-list {
@@ -200,15 +172,36 @@ ul.docs-list {
 }
 
 ul.docs-list li {
-    margin: 12px 0;
-    font-size: 1.05rem;
+    margin: 10px 0;
 }
 
 ul.docs-list code {
-    background: rgba(22, 27, 34, 0.95);
-    padding: 4px 8px;
+    background: #161b22;
+    padding: 2px 6px;
     border-radius: 6px;
     color: #79c0ff;
-    font-size: 1rem;
-    box-shadow: 0 0 6px rgba(88, 166, 255, 0.2);
+}
+
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 180px;
+    }
+
+    body.sidebar-open main {
+        margin-left: 0;
+    }
+
+    #menu-toggle {
+        left: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        margin: 20px 10px;
+        padding: 0 10px;
+    }
 }
