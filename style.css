@@ -86,7 +86,7 @@ header nav a:hover::after {
 
 #sidebar {
     position: fixed;
-    top: 0;
+    top: -1cm;
     left: 0;
     width: 280px;
     height: 100vh;
