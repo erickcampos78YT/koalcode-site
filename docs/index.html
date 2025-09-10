@@ -291,6 +291,111 @@ if x > 0
                     <li><code>fuktion nome(param1, param2, ...) { ... }</code> → definir função personalizada</li>
                     <li><code>memlimit(valor, "unidade", modo)</code> → controlar memória local em funções</li>
                 </ul>
+
+                <h4>Controle de Memória com memlimit</h4>
+                <p>O <code>memlimit</code> deve ser chamado <strong>DENTRO</strong> do corpo da função, preferencialmente no início:</p>
+
+                <h5>Exemplos Básicos:</h5>
+                <pre><code>-- Exemplo 1 - Limite básico em bytes
+fuktion minha_funcao() {
+    memlimit(1024, "", 0)  -- 1024 bytes, modo FIFO
+    -- resto do código da função
+}
+
+-- Exemplo 2 - Limite em kilobytes
+fuktion processar_dados() {
+    memlimit(512, "kb", 1)  -- 512 KB, modo clear+restart
+    -- resto do código da função
+}
+
+-- Exemplo 3 - Limite em megabytes
+fuktion algoritmo_complexo() {
+    memlimit(2, "mb", 0)  -- 2 MB, modo FIFO
+    -- resto do código da função
+}</code></pre>
+
+                <h5>Comportamentos:</h5>
+                <p><strong>MODO 0 (FIFO - First In, First Out):</strong></p>
+                <ul>
+                    <li>Quando a memória excede o limite, remove a variável mais antiga</li>
+                    <li>Continua executando normalmente</li>
+                    <li>Útil para funções que processam dados em streaming</li>
+                    <li>Mantém as variáveis mais recentes</li>
+                </ul>
+
+                <p><strong>MODO 1 (Clear+Restart):</strong></p>
+                <ul>
+                    <li>Quando a memória excede o limite, limpa TODAS as variáveis locais</li>
+                    <li>Reinicia a execução da função do início</li>
+                    <li>Máximo de 3 tentativas de restart</li>
+                    <li>Se exceder 3 tentativas, gera erro fatal</li>
+                    <li>Útil para funções que podem ser reiniciadas sem problemas</li>
+                </ul>
+
+                <h5>Exemplos Práticos:</h5>
+                <pre><code>-- 1. Função que processa lista grande (modo FIFO)
+fuktion processar_lista() {
+    memlimit(1024, "kb", 0)  -- 1KB limite, modo FIFO
+    
+    i = 0
+    while i < 1000 {
+        item = "item_" + i
+        resultado = calcular(item)
+        i = i + 1
+    }
+}
+
+-- 2. Função que pode ser reiniciada (modo clear+restart)
+fuktion algoritmo_iterativo() {
+    memlimit(2048, "kb", 1)  -- 2KB limite, modo restart
+    
+    -- Algoritmo que pode ser reiniciado
+    x = 0
+    while x < 100 {
+        temp = x * x
+        x = x + 1
+    }
+}
+
+-- 3. Função com limite muito pequeno para teste
+fuktion teste_memoria() {
+    memlimit(100, "", 0)  -- Apenas 100 bytes!
+    
+    -- Esta função vai ativar o controle de memória rapidamente
+    a = 1
+    b = 2
+    c = 3
+    -- ... mais variáveis
+}</code></pre>
+
+                <h5>Observações Importantes:</h5>
+                <ul>
+                    <li>O <code>memlimit</code> só funciona dentro de funções definidas com <code>fuktion</code></li>
+                    <li>Não funciona no código principal (fora de funções)</li>
+                    <li>A chamada <code>memlimit()</code> é removida do código durante o parsing</li>
+                    <li>O controle é baseado no tamanho das variáveis locais da função</li>
+                    <li>Variáveis globais não são contabilizadas no limite</li>
+                    <li>O sistema conta: nome da variável + valor (double) = memória usada</li>
+                    <li>Se não especificar unit, assume bytes diretos</li>
+                    <li>O modo 1 tem limite máximo de 3 restarts para evitar loops infinitos</li>
+                </ul>
+
+                <h5>Limitações:</h5>
+                <ul>
+                    <li>Só controla variáveis locais da função</li>
+                    <li>Não controla memória usada por funções built-in</li>
+                    <li>Não controla memória de estruturas internas do interpretador</li>
+                    <li>O cálculo de memória é aproximado (não inclui overhead de ponteiros)</li>
+                </ul>
+
+                <h5>Dicas de Uso:</h5>
+                <ul>
+                    <li>Use modo 0 (FIFO) para funções que processam dados sequencialmente</li>
+                    <li>Use modo 1 (clear+restart) para algoritmos que podem ser reiniciados</li>
+                    <li>Defina limites conservadores para evitar problemas</li>
+                    <li>Teste com limites pequenos para verificar o comportamento</li>
+                    <li>Monitore o uso de memória em funções críticas</li>
+                </ul>
             </section>
 
             <section id="exemplos">
