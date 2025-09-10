@@ -28,6 +28,7 @@
                 <li><a href="#eventos">Eventos</a></li>
                 <li><a href="#efeitos">Efeitos</a></li>
                 <li><a href="#shaders">Shaders</a></li>
+                <li><a href="#rede">Funcionalidades de Rede</a></li>
                 <li><a href="#limitacoes">Limitações Atuais</a></li>
                 <li>
                     <a href="#compilacao-problemas">Compilação e Problemas</a>
@@ -36,8 +37,7 @@
         </aside>
 
         <header>
-            <h1>KoalCode - Documentação</h1>
-            <p>Referência oficial da linguagem</p>
+            <h1>>_KoalCode - Documentação</h1>
             <nav>
                 <a href="../index.html">Início</a>
             </nav>
@@ -50,19 +50,62 @@
                     <strong>KoalCode</strong> é uma linguagem de programação
                     <em>ULTRA simples</em>, interpretada em multithreading, com
                     sintaxe inspirada em Lua. Suporta operações aritméticas,
-                    lógicas, bitwise, estruturas de controle e funções de I/O
-                    básicas.
+                    lógicas, bitwise, estruturas de controle, funções de I/O,
+                    programação gráfica com SDL2/OpenGL, funcionalidades de rede
+                    e funções personalizadas com controle de memória.
                 </p>
             </section>
 
             <section id="compilar">
                 <h2>⚙️ Como Compilar e Executar</h2>
+                
+                <h3>Requisitos Básicos</h3>
+                <ul>
+                    <li>Compilador GCC ou Clang</li>
+                    <li>Sistema Linux/BSD/Unix/macOS ou Windows com WSL/vcpkg/MSYS2/MinGW</li>
+                    <li>Bibliotecas: libm (matemática), libpthread (threading) cURL(para rede)</li>
+                </ul>
+
+                <h3>Requisitos para Gráficos</h3>
+                <ul>
+                    <li>SDL2 development libraries</li>
+                    <li>OpenGL libraries</li>
+                </ul>
+
+                <h3>Requisitos para Rede</h3>
+                <ul>
+                    <li>libcurl development libraries</li>
+                    <li>pthreads (threading)</li>
+                </ul>
+
+                <h3>Instalação de Dependências</h3>
+                <h4>Arch Linux</h4>
+                <pre><code>pacman -S gcc sdl2 sdl2_image sdl2_mixer sdl2_ttf mesa curl</code></pre>
+                <h4>Fedora/CentOS</h4>
+                <pre><code>dnf install gcc SDL2-devel SDL2_image-devel mesa-libGL-devel libcurl-devel</code></pre>
+                <h4>macOS</h4>
+                <pre><code>brew install gcc sdl2 sdl2_image curl</code></pre>
+                <h4>FreeBSD</h4>
+                <pre><code>pkg install gcc sdl2 sdl2_image sdl2_mixer sdl2_ttf mesa-libGL-devel mesa-libGLU-devel curl</code></pre>
+                <h4>Ubuntu/Debian</h4>
+                <pre><code>apt-get install build-essential libsdl2-dev libsdl2-image-dev libgl1-mesa-dev libcurl4-openssl-dev</code></pre>
+
+                <h4>Windows 10/11 (vcpkg) ou WSL(recomendado ubuntu ou base debian)</h4>
+                <pre><code># Instalar vcpkg primeiro
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+.\vcpkg integrate install
+
+# Instalar dependências
+.\vcpkg install sdl2:x64-windows sdl2-image:x64-windows curl:x64-windows pthreads:x64-windows</code></pre>
+
+                <h3>Comandos de Compilação</h3>
                 <pre><code># Compilar (flags obrigatórias)
-gcc -o koalcode main.c -lSDL2 -lSDL2_image -lGL -lm -lpthread
+gcc koalcode.c -o koalcode -lm -lpthread -lSDL2 -lSDL2_image -lGL -lcurl
 
 # Executar um script
-./koalcode script.kc
-</code></pre>
+./koalcode meu_script.kc</code></pre>
             </section>
 
             <section id="tipos-de-dados">
@@ -198,40 +241,55 @@ if x > 0
 
             <section id="funcoes-builtin">
                 <h2>🔧 Funções Built-in</h2>
+                
+                <h3>Função de Saída</h3>
                 <ul class="docs-list">
-                    <li><code>print(...)</code> → imprime no console</li>
-                    <li>
-                        <code
-                            >mistrura de string e numeros: nome = "koal" tipo =
-                            "interpretada" print("nome:", nome, "tipo:",
-                            tipo)</code
-                        >
-                        → deve sair no console como : nome: koal tipo:
-                        interpretada
-                    </li>
-                    <li><code>input.io()</code> → lê texto</li>
-                    <code
-                        >print("Digite seu nome:") input.io()
-                        print("Obrigado!")</code
-                    >
-                    <li><code>inputn.io()</code> → lê número</li>
-                    <code
-                        >print("Digite um número:") numero = inputn.io()
-                        print("Você digitou:", numero) print("O dobro é:",
-                        numero * 2) print("O quadrado é:", numero ** 2)</code
-                    >
-                    <li>
-                        <code>writef("arquivo.txt","texto")</code> → escreve em
-                        arquivo
-                    </li>
-                    <li>
-                        <code>readf("arquivo.txt")</code> → verifica se arquivo
-                        existe
-                    </li>
-                    <li>
-                        <code>clear()</code> → limpa tela do terminal(compativel
-                        com Linux/Unix(clear) e Windows(cls)
-                    </li>
+                    <li><code>print(...)</code> → imprime valores na tela, separados por espaços e seguidos de nova linha</li>
+                    <li><code>print("Valores:", 10, 20, 30)</code> → mistura strings e números</li>
+                </ul>
+
+                <h3>Funções de Entrada/IO</h3>
+                <ul class="docs-list">
+                    <li><code>input.io()</code> → lê uma linha de texto do usuário (funcionalidade básica)</li>
+                    <li><code>inputn.io()</code> → lê um número do usuário e converte automaticamente para double</li>
+                </ul>
+
+                <h3>Posição do Mouse</h3>
+                <ul class="docs-list">
+                    <li><code>input.mouse.x()</code> → retorna posição X atual do mouse na janela</li>
+                    <li><code>input.mouse.y()</code> → retorna posição Y atual do mouse na janela</li>
+                    <li><code>input.mouse.relx()</code> → retorna movimento relativo X do mouse</li>
+                    <li><code>input.mouse.rely()</code> → retorna movimento relativo Y do mouse</li>
+                </ul>
+
+                <h3>Botões do Mouse</h3>
+                <ul class="docs-list">
+                    <li><code>input.mouse.left()</code> → estado do botão esquerdo (1 = pressionado, 0 = não pressionado)</li>
+                    <li><code>input.mouse.right()</code> → estado do botão direito (1 = pressionado, 0 = não pressionado)</li>
+                </ul>
+
+                <h3>Teclas do Teclado</h3>
+                <ul class="docs-list">
+                    <li><code>input.key.w()</code>, <code>input.key.a()</code>, <code>input.key.s()</code>, <code>input.key.d()</code> → teclas WASD</li>
+                    <li><code>input.key.space()</code> → barra de espaço</li>
+                    <li><code>input.key.shift()</code> → tecla Shift esquerda</li>
+                </ul>
+
+                <h3>Funções de Sistema</h3>
+                <ul class="docs-list">
+                    <li><code>clear()</code> → limpa tela do terminal (compatível com Linux/Unix e Windows)</li>
+                </ul>
+
+                <h3>Funções de Arquivo</h3>
+                <ul class="docs-list">
+                    <li><code>writef(arquivo, conteudo)</code> → escreve texto em arquivo (retorna 1 = sucesso, 0 = falha)</li>
+                    <li><code>readf(arquivo)</code> → verifica se arquivo existe (retorna 1 = existe, 0 = não existe)</li>
+                </ul>
+
+                <h3>Funções Personalizadas</h3>
+                <ul class="docs-list">
+                    <li><code>fuktion nome(param1, param2, ...) { ... }</code> → definir função personalizada</li>
+                    <li><code>memlimit(valor, "unidade", modo)</code> → controlar memória local em funções</li>
                 </ul>
             </section>
 
@@ -255,24 +313,13 @@ while opcao != 0 {
   opcao = inputn.io()
 }
 </code></pre>
-                <h3>Leitura e Criacao de arquivo</h3>
-                <pre><code>writef(arquivo, conteudo)
-Escreve texto em um arquivo. Cria um arquivo se não existir, sobrescreve se existir.
-
-Parâmetros:
-- `arquivo` (string): Nome do arquivo
-- `conteudo` (string): Texto a ser escrito
--- Criar arquivo simples
+                <h3>Leitura e Criação de arquivo</h3>
+                <pre><code>-- Criar arquivo simples
 resultado = writef("dados.txt", "Olá mundo!")
 print("Resultado:", resultado)
 
--- Criar arquivo de configuração por exemplo
+-- Criar arquivo de configuração
 config_ok = writef("config.txt", "debug=true\nversao=1.0\nautor=KoalCode")
-
--- Arquivo com dados de usuário
-print("Digite um valor:")
-valor = inputn.io()
-arquivo_criado = writef("usuario_data.txt", "Valor inserido pelo usuario")
 
 -- Verificar se arquivo existe
 existe = readf("dados.txt")
@@ -280,13 +327,130 @@ print("Arquivo existe:", existe)
 
 -- Sistema de configuração
 config_algo = readf("config.txt")
-print("Status configuração:", config_algo)
+print("Status configuração:", config_algo)</code></pre>
 
--- Exemplo prático
-dados_existem = readf("dados.txt")
--- Se dados_existirem entao == 1, o arquivo existe
--- Se dados nao existirem == 0, arquivo não existe
-</code></pre>
+                <h3>App Gráfico Básico</h3>
+                <pre><code>print("=== GRÁFICOS 3D ===")
+
+resultado = graphics.init()
+if resultado == 1 {
+    print("Gráficos inicializados! Janela aberta.")
+
+    frame = 0
+    rodando = 1
+
+    while rodando == 1 && frame < 180 {
+        -- Processar eventos
+        eventos = graphics.events()
+        if eventos == -1 {
+            rodando = 0
+        }
+
+        -- Limpar tela
+        graphics.clear()
+
+        -- Resetar transformações
+        graphics.loadmatrix()
+
+        -- Mover objeto para frente
+        graphics.translate(0, 0, -5)
+
+        -- Rotação multiplicado no frame
+        angulo = frame * 2
+        graphics.rotate(angulo, 1, 1, 0)
+
+        -- Desenhar triângulo vermelho
+        graphics.color(1, 0, 0)
+        graphics.triangle(-1, -1, 0,  1, -1, 0,  0, 1, 0)
+
+        -- Desenhar linhas azuis
+        graphics.color(0, 0, 1)
+        graphics.line(-1, 0, 0,  1, 0, 0)
+        graphics.line(0, -1, 0,  0, 1, 0)
+
+        -- Mostrar na tela
+        graphics.swap()
+
+        frame += 1
+    }
+
+    graphics.quit()
+    print("Gráficos finalizados.")
+} else {
+    print("Erro ao inicializar gráficos!")
+}</code></pre>
+
+                <h3>Funções Personalizadas</h3>
+                <pre><code>-- Função simples de cálculo
+fuktion calcular_area(raio) {
+    pi = 3.14159
+    area = pi * raio * raio
+    return area
+}
+
+-- Função com controle de memória
+fuktion processar_dados(n) {
+    memlimit(2, "kb", 0)
+    
+    i = 0
+    while i < n {
+        temp_var = "dados_" + i
+        resultado = i * 2
+        i = i + 1
+    }
+    return "processado"
+}
+
+-- Função recursiva para fatorial
+fuktion fatorial(n) {
+    if n <= 1 {
+        return 1
+    } else {
+        return n * fatorial(n - 1)
+    }
+}
+
+-- Testando as funções
+print("Área do círculo (raio 5):", calcular_area(5))
+print("Fatorial de 6:", fatorial(6))
+print("Processamento:", processar_dados(100))</code></pre>
+
+                <h3>Exemplo de Rede</h3>
+                <pre><code>-- Inicializar sistema de rede
+network.init()
+
+-- Fazer requisição HTTP GET
+print("Fazendo requisição HTTP GET...")
+status = http.get("https://httpbin.org/get")
+print("Status da resposta:", status)
+
+-- Testar conectividade
+if network.ping("google.com") {
+    print("Google está acessível!")
+} else {
+    print("Google não está acessível.")
+}
+
+-- Exemplo de conexão socket
+sock = socket.connect("httpbin.org", 80)
+if sock > 0 {
+    print("Conectado! Enviando requisição HTTP...")
+    
+    -- Enviar requisição HTTP via socket
+    http_request = "GET /get HTTP/1.1\r\nHost: httpbin.org\r\nConnection: close\r\n\r\n"
+    bytes_sent = socket.send(sock, http_request)
+    print("Bytes enviados:", bytes_sent)
+    
+    -- Receber resposta
+    bytes_received = socket.recv(sock, 1024)
+    print("Bytes recebidos:", bytes_received)
+    
+    -- Fechar conexão
+    socket.close(sock)
+}
+
+-- Finalizar sistema de rede
+network.quit()</code></pre>
             </section>
 
             <section id="api-grafica">
@@ -375,6 +539,7 @@ dados_existem = readf("dados.txt")
                         <code>graphics.events()</code> → Atualiza eventos do
                         frame.
                     </li>
+                    <h2>Teclas do Teclado(altamente bugado não usem por favor e principalmente o mouse)</h2>
                     <li>
                         <code>input.key.w()</code> → Retorna 1 se tecla
                         <b>W</b> está pressionada.
@@ -450,14 +615,69 @@ dados_existem = readf("dados.txt")
             shader.uniform(sh, "tempo", 1.0)</code></pre>
             </section>
 
+            <section id="rede">
+                <h2>🌐 Funcionalidades de Rede</h2>
+                <p>
+                    O KoalCode inclui funcionalidades completas de rede para requisições HTTP, 
+                    conexões socket e utilitários de conectividade.
+                </p>
+
+                <h3>Inicialização do Sistema de Rede</h3>
+                <ul class="docs-list">
+                    <li><code>network.init()</code> → inicializa o sistema de rede (retorna 1 se sucesso, 0 se falha)</li>
+                    <li><code>network.quit()</code> → finaliza o sistema de rede</li>
+                </ul>
+
+                <h3>Requisições HTTP</h3>
+                <ul class="docs-list">
+                    <li><code>http.get("https://exemplo.com/api/dados")</code> → faz requisição GET (retorna código de status)</li>
+                    <li><code>http.post("https://exemplo.com/api/dados", "{\"nome\": \"João\"}")</code> → faz requisição POST (retorna código de status)</li>
+                </ul>
+
+                <h3>Conexões Socket TCP</h3>
+                <ul class="docs-list">
+                    <li><code>socket.connect("exemplo.com", 80)</code> → conecta a servidor TCP (retorna descritor do socket)</li>
+                    <li><code>socket.send(sock, "dados para enviar")</code> → envia dados (retorna bytes enviados)</li>
+                    <li><code>socket.recv(sock, 1024)</code> → recebe dados (retorna bytes recebidos)</li>
+                    <li><code>socket.close(sock)</code> → fecha conexão (retorna 1 se sucesso)</li>
+                </ul>
+
+                <h3>Utilitários de Rede</h3>
+                <ul class="docs-list">
+                    <li><code>network.ping("google.com")</code> → testa conectividade (retorna 1 se acessível)</li>
+                </ul>
+
+                <h3>Exemplo Completo</h3>
+                <pre><code>-- Inicializar sistema de rede
+network.init()
+
+-- Fazer requisição HTTP GET
+print("Fazendo requisição HTTP GET...")
+status = http.get("https://httpbin.org/get")
+print("Status da resposta:", status)
+
+-- Testar conectividade
+if network.ping("google.com") {
+    print("Google está acessível!")
+} else {
+    print("Google não está acessível.")
+}
+
+-- Finalizar sistema de rede
+network.quit()</code></pre>
+            </section>
+
             <section id="limitacoes">
                 <h2>⚠️ Limitações Atuais</h2>
                 <ul>
-                    <li>Sem funções definidas pelo usuário</li>
-                    <li>Sem arrays/objetos</li>
-                    <li>Strings limitadas (apenas I/O)</li>
-                    <li>Classes experimentais (não funcionais)</li>
-                    <li>Somente <code>while</code> loops</li>
+                    <li><strong>Funções:</strong> Suporte básico a funções definidas pelo usuário com <code>fuktion</code></li>
+                    <li><strong>Estruturas de dados:</strong> Não possui arrays ou objetos</li>
+                    <li><strong>Strings:</strong> Suporte limitado, principalmente para I/O (não podem ser atribuídas a variáveis)</li>
+                    <li><strong>Classes:</strong> Sistema declarado mas não funcional (experimental)</li>
+                    <li><strong>Threading:</strong> Suporte básico (experimental)</li>
+                    <li><strong>Arquivos:</strong> <code>readf()</code> apenas verifica existência, não retorna conteúdo</li>
+                    <li><strong>For loops:</strong> Apenas <code>while</code> loops estão disponíveis</li>
+                    <li><strong>Gráficos:</strong> Funcionalidades básicas como suporte a texturas, transparência e modelos 3D(entre aspas ok kkkk)</li>
                 </ul>
             </section>
 
@@ -473,14 +693,14 @@ dados_existem = readf("dados.txt")
                     </li>
                     <li>
                         janela nao abre → verificar se o display esta
-                        diponivel(nao funciona em SSH sem X11)
+                        diponivel(não funciona em SSH sem X11)
                     </li>
                 </ul>
             </section>
         </main>
 
         <footer>
-            <p>>_KoalCode Docs · v0.9 Experimental</p>
+            <p>>_KoalCode Docs · v1.0 Experimental</p>
         </footer>
 
         <script>
@@ -494,7 +714,6 @@ dados_existem = readf("dados.txt")
                     body.classList.toggle("sidebar-open");
                 });
 
-                // Close sidebar when a link is clicked
                 const sidebarLinks = document.querySelectorAll("#sidebar a");
                 sidebarLinks.forEach((link) => {
                     link.addEventListener("click", () => {
